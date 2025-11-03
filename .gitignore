@@ -1,0 +1,37 @@
+# Python cache files
+__pycache__/
+*.pyc
+
+# Data folders
+# These are often large and should not be tracked by Git
+data/processed/
+data/raw/
+
+# Trained models
+# Model files like .h5 are large binaries
+models/
+*.h5
+
+# Results and logs
+results/
+*.log
+*.history
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+notebooks/.ipynb_checkpoints/
+
+# Virtual environment
+venv/
+env/
+.deepfake_detector/
+
+# IDE-specific (VS Code)
+.vscode/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Lock files
+*.lock
