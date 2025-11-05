@@ -38,9 +38,9 @@ FRAMES_PER_VIDEO = 30           # Number of frames to extract from each video
 
 # --- Model & Training Parameters ---
 TARGET_IMAGE_SIZE = 299            # Size to which images are resized for model input
-BATCH_SIZE = 32
+BATCH_SIZE = 64
 EPOCHS = 20
-LEARNING_RATE = 1e-4
+LEARNING_RATE = 2e-3
 
 print("Configuration loaded:")
 print(f"  Project Root: {PROJECT_ROOT}")
