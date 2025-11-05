@@ -1,7 +1,15 @@
 import os
 
 # --- Main Project Paths ---
-PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# PROJECT_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+# DATA_DIR = os.path.join(PROJECT_ROOT, "data")
+# RAW_DATA_DIR = os.path.join(DATA_DIR, "raw")
+# PROCESSED_DATA_DIR = os.path.join(DATA_DIR, "processed")
+# MODEL_DIR = os.path.join(PROJECT_ROOT, "models")
+# RESULTS_DIR = os.path.join(PROJECT_ROOT, "results")
+
+# ---Colab:Main Project Paths ---
+PROJECT_ROOT = "/content/deep_fake_detector"
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
 RAW_DATA_DIR = os.path.join(DATA_DIR, "raw")
 PROCESSED_DATA_DIR = os.path.join(DATA_DIR, "processed")
@@ -23,13 +31,14 @@ TEST_REAL_DIR = os.path.join(TEST_DIR, "real")
 TEST_FAKE_DIR = os.path.join(TEST_DIR, "fake")
 
 
+
 # --- Preprocessing Parameters ---
 IMAGE_SIZE = 224                # Our standard image size (224x224)
 FRAMES_PER_VIDEO = 30           # Number of frames to extract from each video
 
 # --- Model & Training Parameters ---
-TARGET_IMAGE_SIZE = 128            # Size to which images are resized for model input
-BATCH_SIZE = 8
+TARGET_IMAGE_SIZE = 299            # Size to which images are resized for model input
+BATCH_SIZE = 32
 EPOCHS = 20
 LEARNING_RATE = 1e-4
 

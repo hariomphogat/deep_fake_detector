@@ -47,11 +47,11 @@ if __name__ == "__main__":
     print("Building test model...")
     # Import image size from our config
     try:
-        from config import IMAGE_SIZE
-        model = build_baseline_model(IMAGE_SIZE)
+        from config import TARGET_IMAGE_SIZE
+        model = build_baseline_model(TARGET_IMAGE_SIZE)
         model.summary()
         print("Model built successfully!")
     except ImportError:
-        print("Error: Could not import IMAGE_SIZE from config.")
+        print("Error: Could not import TARGET_IMAGE_SIZE from config.")
     except Exception as e:
         print(f"Error building model: {e}")
