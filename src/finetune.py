@@ -141,28 +141,33 @@ def main():
     print("Baseline model loaded successfully.")
 
     # 3. --- NEW: Unfreeze the base model layers ---
-    # The Xception model is a single layer *within* our loaded model.
-    # Its default name is 'xception'.
-    
-    # Find the base model layer
-    base_model = model.get_layer('xception')
-    
-    # Set the whole base model to "trainable"
-    base_model.trainable = True
-    
-    # --- Optional but recommended: Freeze the first few blocks ---
-    # We only want to fine-tune the *top* layers, not the *bottom* ones
-    # that detect simple edges and colors.
-    # Let's freeze the first 50 layers and let the rest (top 81) be trainable.
-    # Xception has 131 layers in its base.
-    layers_to_freeze = 50 
-    print(f"Unfreezing the top {len(base_model.layers) - layers_to_freeze} layers of Xception...")
-    
-    for layer in base_model.layers[:layers_to_freeze]:
-        layer.trainable = False
-        
-    for layer in base_model.layers[layers_to_freeze:]:
-        layer.trainable = True
+    # The layers of the Xception model are *directly* in our loaded model.
+    # We will unfreeze all layers from 'block10_sepconv1_act' onwards.
+    # We MUST keep Batch Normalization layers frozen.
+
+    UNFREEZE_FROM_LAYER = 'block10_sepconv1_act' # Unfreezes the last 5 blocks
+
+    print(f"Unfreezing model from layer: {UNFREEZE_FROM_LAYER}")
+
+    set_trainable = False
+    for layer in model.layers:
+        if layer.name == UNFREEZE_FROM_LAYER:
+            set_trainable = True
+
+        if set_trainable:
+            # We are in the fine-tuning layers
+            if not isinstance(layer, tf.keras.layers.BatchNormalization):
+                # Unfreeze the layer
+                layer.trainable = True
+                # print(f"Unfreezing: {layer.name}") # Optional: Uncomment for debugging
+            else:
+                # IMPORTANT: Keep Batch Norm layers frozen
+                layer.trainable = False
+        else:
+            # We are in the frozen layers
+            layer.trainable = False
+
+    print("Model layers un-frozen for fine-tuning.")
 
     # 4. --- NEW: Re-compile the model with a VERY low learning rate ---
     # This is the most important step of fine-tuning.

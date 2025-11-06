@@ -13,8 +13,8 @@ PROJECT_ROOT = "/content/deep_fake_detector"
 DATA_DIR = os.path.join(PROJECT_ROOT, "data")
 RAW_DATA_DIR = os.path.join(DATA_DIR, "raw")
 PROCESSED_DATA_DIR = os.path.join(DATA_DIR, "processed")
-# MODEL_DIR = os.path.join(PROJECT_ROOT, "models")
-MODEL_DIR = "/content/drive/MyDrive/models"
+MODEL_DIR = os.path.join(PROJECT_ROOT, "models")
+# MODEL_DIR = "/content/drive/MyDrive/models"
 RESULTS_DIR = os.path.join(PROJECT_ROOT, "results")
 
 # --- Raw Data Paths ---
