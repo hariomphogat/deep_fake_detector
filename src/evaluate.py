@@ -95,4 +95,6 @@ def main():
     plot_confusion_matrix(y_true, y_pred_classes, cm_path)
 
 if __name__ == "__main__":
+    # Create the results directory if it doesn't exist
+    os.makedirs(config.RESULTS_DIR, exist_ok=True)
     main()
