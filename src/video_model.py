@@ -19,26 +19,50 @@ def build_video_model():
     Builds the CNN-LSTM video model.
     
     This model consists of two parts:
-    1. Encoder (CNN): A pre-trained Xception model to extract
-       features from each frame.
+    1. Encoder (CNN): Instead of using a generic ImageNet Xception model, we are
+    loading our OWN pre-trained 'finetuned_model.h5' and
+    using ITS feature extractor. This extractor already knows how to spot deepfakes.
     2. Decoder (LSTM): An LSTM network to analyze the
        sequence of features over time.
     """
-    print("Building new CNN-LSTM video model...")
+    print("Building new CNN-LSTM video model using 'finetuned_model.h5' as the encoder......")
 
-    # --- 1. The "Encoder" (Feature Extractor) ---
+    # --- 1. The "Encoder" (Feature Extractor: Pre-Trained Model) ---
+    # Define the path to the best model
+    finetuned_model_path = os.path.join(config.MODEL_DIR, "finetuned_model.h5")
+    if not os.path.exists(finetuned_model_path):
+        print(f"Error: Model not found at {finetuned_model_path}")
+        print("Please run train.py and finetune.py first.")
+        exit(1)
     
-    # Load the Xception base, but WITHOUT the top classification layers
-    # `pooling='avg'` adds a GlobalAveragePooling2D layer, turning the
-    # 10x10x2048 feature map into a flat (2048,) vector.
-    base_model = Xception(
-        weights='imagenet', 
-        include_top=False, 
-        input_shape=(config.TARGET_IMAGE_SIZE, config.TARGET_IMAGE_SIZE, 3),
-        pooling='avg'
-    )
-    
-    # Freeze the base model. We will only train the new LSTM head first.
+    # Load the full, fine-tuned image model
+    full_image_model = tf.keras.models.load_model(finetuned_model_path)
+    try:
+        # Get the output of the pooling layer
+        encoder_output = full_image_model.get_layer('global_average_pooling2d').output
+        
+        # Create a new model using the same input as the full model,
+        # but outputting from the pooling layer
+        base_model = Model(
+            inputs=full_image_model.input, 
+            outputs=encoder_output,
+            name="finetuned_encoder"
+        )
+        
+        print("Successfully loaded and rebuilt encoder from 'finetuned_model.h5'.")
+        
+    except ValueError:
+        print("Error: Could not find layer 'global_average_pooling2d' in your saved model.")
+        print("Falling back to ImageNet weights.")
+        # This is a fallback, just in case
+        base_model = Xception(
+            weights='imagenet', 
+            include_top=False, 
+            input_shape=(config.TARGET_IMAGE_SIZE, config.TARGET_IMAGE_SIZE, 3),
+            pooling='avg'
+        )
+
+    # Freeze this base model. Its weights are already perfect.
     base_model.trainable = False
     
     # --- 2. The Full Model (Encoder + Decoder) ---
@@ -54,10 +78,8 @@ def build_video_model():
     ))
     
     # --- The Magic Layer: TimeDistributed ---
-    # This layer "wraps" our Xception model.
-    # It tells Keras: "Apply this 'base_model' to every
+    # Apply our custom, fine-tuned 'base_model' to every
     # single frame (all 30) in the sequence."
-    #
     # Input to this layer: (Batch, 30, 299, 299, 3)
     # Output of this layer: (Batch, 30, 2048)
     
@@ -100,4 +122,3 @@ if __name__ == "__main__":
         
     except Exception as e:
         print(f"\nModel build FAILED: {e}")
-        print("Please check your config.py for TARGET_IMAGE_SIZE and SEQUENCE_LENGTH.")
