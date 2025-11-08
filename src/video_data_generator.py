@@ -90,16 +90,16 @@ class VideoDataGenerator(tf.keras.utils.Sequence):
         y = np.empty((self.batch_size), dtype=int)
         
         
-        for i, row in batch_df.iterrows():
+        # We must use 'enumerate' to get a batch index from 0 to 15 for a batch size of 16
+        for i, (original_index, row) in enumerate(batch_df.iterrows()):
             # Get the path to the video folder
             video_folder_path = row['filepath']
-            
+
             # Load the sequence of frames
+            # 'i' is now our clean batch index (0, 1, 2...)
             X[i,] = self.__load_video_frames(video_folder_path)
-            
+
             # Store the label (0 for fake, 1 for real)
-            # Keras sorts 'fake', 'real' alphabetically
-            # So 'fake' = 0 and 'real' = 1
             y[i] = 1 if row['label'] == 'real' else 0
             
         return X, y
