@@ -44,7 +44,7 @@ FRAMES_PER_VIDEO = 30           # Number of frames to extract from each video
 # --- Model & Training Parameters ---
 TARGET_IMAGE_SIZE = 299            # Size to which images are resized for model input
 BATCH_SIZE = 64
-VIDEO_BATCH_SIZE = 16
+VIDEO_BATCH_SIZE = 8
 EPOCHS = 20
 LEARNING_RATE = 2e-3
 SEQUENCE_LENGTH = 30
