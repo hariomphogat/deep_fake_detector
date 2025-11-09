@@ -6,7 +6,7 @@ from tensorflow.keras.applications import Xception
 
 # Import our settings (SEQUENCE_LENGTH, TARGET_IMAGE_SIZE)
 try:
-    import config
+    from . import config
 except ImportError:
     print("Error: Could not import config.py. Make sure it's in the src/ directory.")
     exit(1)
