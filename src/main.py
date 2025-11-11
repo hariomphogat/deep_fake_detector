@@ -51,15 +51,7 @@ async def load_models():
     else:
         print(f"WARNING: Image model not found at {image_model_path}")
 
-    # # Load Video Model (video_model_v2.keras)
-    # video_model_path = os.path.join(config.MODEL_DIR, "video_model_v2.keras")
-    # if os.path.exists(video_model_path):
-    #     models["video_model"] = tf.keras.models.load_model(video_model_path)
-    #     print("Video model (video_model_v2.keras) loaded successfully.")
-    # else:
-    #     print(f"WARNING: Video model not found at {video_model_path}")
-    # --- START: ULTIMATE FIX FOR VIDEO MODEL ---
-    # Load Video Model (video_model_v2.keras)
+
     video_model_path = os.path.join(config.MODEL_DIR, "video_model_v2.keras")
     if os.path.exists(video_model_path):
         try:
