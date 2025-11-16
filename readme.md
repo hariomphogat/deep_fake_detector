@@ -1,3 +1,11 @@
+title: {Deepfake Detector}
+emoji: {🕵️}
+colorFrom: {blue}
+colorTo: {indigo}
+sdk: {streamlit}
+sdk_version: "{1.28.0}"
+app_file: app.py
+pinned: false
 # Deepfake Detector
 
 This project is a complete, end-to-end deepfake detection system capable of analyzing both still images and video files. It uses a dual-model architecture to provide robust predictions, wrapped in a clean, interactive web interface.
