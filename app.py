@@ -5,7 +5,7 @@ import os
 # --- Page Configuration ---
 st.set_page_config(
     page_title="Deepfake Detector",
-    page_icon="🤖",
+    page_icon="🕵️",
     layout="wide"
 )
 
@@ -28,7 +28,7 @@ with col1:
 
     if image_file:
         # Display the uploaded image
-        st.image(image_file, caption="Uploaded Image.", use_column_width=True)
+        st.image(image_file, caption="Uploaded Image.", use_container_width=True)
         
         # The 'Detect' button
         if st.button("Detect Image"):
