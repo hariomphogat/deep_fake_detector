@@ -1,9 +1,9 @@
-title: {Deepfake Detector}
-emoji: {🕵️}
-colorFrom: {blue}
-colorTo: {indigo}
-sdk: {streamlit}
-sdk_version: "{1.28.0}"
+title: {{Deepfake Detector}}
+emoji: {{🕵️}}
+colorFrom: {{blue}}
+colorTo: {{indigo}}
+sdk: {{streamlit}}
+sdk_version: "{{1.28.0}}"
 app_file: app.py
 pinned: false
 # Deepfake Detector
