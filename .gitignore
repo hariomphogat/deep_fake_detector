@@ -8,11 +8,6 @@ data/processed/
 data/raw/
 processed_sequences/
 
-# Trained models
-# Model files like .h5 are large binaries
-models/
-*.h5
-
 # Results and logs
 results/
 *.log
