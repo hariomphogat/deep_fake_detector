@@ -8,8 +8,7 @@ data/processed/
 data/raw/
 processed_sequences/
 
-# Results and logs
-results/
+# logs
 *.log
 *.history
 
