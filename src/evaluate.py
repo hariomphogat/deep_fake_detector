@@ -40,8 +40,8 @@ def plot_confusion_matrix(y_true, y_pred, save_path):
     cm = confusion_matrix(y_true, y_pred)
     plt.figure(figsize=(8, 6))
     sns.heatmap(cm, annot=True, fmt='d', cmap='Blues',
-                xticklabels=['Real', 'Fake'],
-                yticklabels=['Real', 'Fake'])
+                xticklabels=['Fake', 'Real'],
+                yticklabels=['Fake', 'Real'])
     plt.title('Confusion Matrix')
     plt.ylabel('Actual Label')
     plt.xlabel('Predicted Label')

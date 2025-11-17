@@ -43,11 +43,11 @@ async def load_models():
     """
     print("--- Loading models into memory... ---")
     
-    # Load Image Model (finetuned_model.h5)
-    image_model_path = os.path.join(config.MODEL_DIR, "finetuned_model.h5")
+    # Load Image Model (baseline_model.h5)
+    image_model_path = os.path.join(config.MODEL_DIR, "baseline_model.h5")
     if os.path.exists(image_model_path):
         models["image_model"] = tf.keras.models.load_model(image_model_path, compile=False)
-        print("Image model (finetuned_model.h5) loaded successfully.")
+        print("Image model (baseline_model.h5) loaded successfully.")
     else:
         print(f"WARNING: Image model not found at {image_model_path}")
 

@@ -58,8 +58,8 @@ def process_video_for_prediction(video_path, detector):
             
             if results:
                 x1, y1, width, height = results[0]['box']
-                x1, y1 = max(0, x1 - int(width*0.1)), max(0, y1 - int(height*0.1))
-                x2, y2 = min(frame.shape[1], x1 + int(width*1.2)), min(frame.shape[0], y1 + int(height*1.2))
+                x1, y1 = max(0, x1), max(0, y1)
+                x2, y2 = min(frame.shape[1], x1 + width), min(frame.shape[0], y1 + height)
                 
                 face_crop = frame[y1:y2, x1:x2]
                 
